@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vadrangi Vishal Kumar</title>
+  <meta name="description"
+    content="Passionate Creative Designer and Developer dedicated to crafting innovative digital experiences.">
+  <meta name="keywords" content="Vadrangi Vishal Kumar, Developer, Python, Java, Web Development, Portfolio">
+  <meta name="author" content="Vadrangi Vishal Kumar">
+  <meta property="og:title" content="Vadrangi Vishal Kumar — Creative Developer">
+  <meta property="og:description"
+    content="Passionate Creative Designer and Developer crafting innovative digital experiences.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vadrangi-vishal-kumar.vercel.app">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23222'/%3E%3Ctext y='72' x='50' text-anchor='middle' font-size='60' font-family='sans-serif' fill='%23f0f0f0'%3EV%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap"
+    rel="stylesheet">
+
+  <!-- Lucide Icons — latest stable UMD build -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="pre-inner">
+      <div class="pre-text">VVK</div>
+      <div class="pre-bar">
+        <div class="pre-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURSOR -->
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
+
+  <!-- ===================== NAVBAR — bottom dock ===================== -->
+  <nav id="navbar">
+    <div class="nav-dock">
+
+      <a href="#hero" class="nav-item active" data-section="hero" title="Home">
+        <!-- house icon -->
+        <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z" />
+          <polyline points="9 21 9 12 15 12 15 21" />
+        </svg>
+      </a>
+
+      <a href="#about" class="nav-item" data-section="about" title="About">
+        <!-- user icon -->
+        <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+        </svg>
+      </a>
+
+      <a href="#skills" class="nav-item" data-section="skills" title="Skills">
+        <!-- terminal / code icon -->
+        <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 17 10 11 4 5" />
+          <line x1="12" y1="19" x2="20" y2="19" />
+        </svg>
+      </a>
+
+      <a href="#experience" class="nav-item" data-section="experience" title="Experience">
+        <!-- briefcase icon -->
+        <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" />
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+          <line x1="12" y1="12" x2="12" y2="12" />
+          <path d="M2 12h20" />
+        </svg>
+      </a>
+
+      <a href="#projects" class="nav-item" data-section="projects" title="Projects">
+        <!-- grid icon -->
+        <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </svg>
+      </a>
+
+
+
+
+
+      <a href="#certifications" class="nav-item" data-section="certifications" title="Certifications">
+        <!-- award / file icon -->
+        <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="9" y1="13" x2="15" y2="13" />
+          <line x1="9" y1="17" x2="12" y2="17" />
+        </svg>
+      </a>
+
+      <a href="#contact" class="nav-item" data-section="contact" title="Contact">
+        <!-- compass / navigation icon -->
+        <svg class="nav-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+        </svg>
+      </a>
+
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero" class="hero">
+    <div class="hero-bg-text" aria-hidden="true">Quantum Computing Enthusiast </div>
+
+    <div class="hero-photo-wrap">
+      <div class="photo-frame">
+        <img src="{{ url_for('static', filename='images/prof.png') }}" alt="Vadrangi Vishal Kumar">
+      </div>
+    </div>
+
+    <div class="hero-top-left">
+      <p class="hero-copy">© Vishal Kumar</p>
+    </div>
+
+    <div class="hero-mid-right">
+      <div class="hero-label">
+        <span class="label-line">Backend Developer &amp;</span>
+        <span class="label-line">Quantum Computing Enthusiast</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about" class="section about-section">
+    <div class="section-tag reveal">About</div>
+
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <h2 class="section-heading">Backend Developer &amp;<br><em>Quantum Computing Enthusiast</em></h2>
+        <p class="about-bio">
+          I am a Computer Science undergraduate with a strong interest in Backend Development and emerging computing
+          technologies. I focus on building scalable backend applications, designing efficient systems, and developing
+          practical software solutions.
+        </p>
+        <p class="about-bio" style="margin-top:1rem;">
+          Currently pursuing a Bachelor of Science (Hons.) in Computer Science, I am actively exploring and learning
+          Quantum Computing (QC) and Post-Quantum Cryptography (PQC) while strengthening my foundation in software
+          engineering and modern backend development.
+        </p>
+
+        <!-- Social / contact icons -->
+        <div class="about-contacts">
+          <a href="https://github.com/Vshal-Kumar" target="_blank" rel="noopener noreferrer" class="contact-icon-btn"
+            title="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/vadrangi-vishal-kumar-2a9b74341/" target="_blank"
+            rel="noopener noreferrer" class="contact-icon-btn" title="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+            <span>LinkedIn</span>
+          </a>
+          <a href="mailto:vadrangi.vishalkumar@gmail.com" class="contact-icon-btn" title="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <polyline points="2 4 12 13 22 4" />
+            </svg>
+            <span>Email</span>
+          </a>
+          <a href="tel:+918919257391" class="contact-icon-btn" title="Call">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <span>+91 89192 57391</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="about-right reveal delay-1">
+        <div class="about-info-grid">
+          <div class="about-info-card">
+            <span class="info-label">Status</span>
+            <span class="info-val available">Open to work ✓</span>
+          </div>
+          <div class="about-info-card">
+            <span class="info-label">Location</span>
+            <span class="info-val">Hyderabad, Telangana</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SKILLS ===================== -->
+  <section id="skills" class="section skills-section">
+    <div class="section-tag reveal">Skills &amp; Stack</div>
+    <h2 class="section-heading reveal">Technical <em>Expertise</em></h2>
+
+    <div class="skills-layout">
+
+      <!-- Left: skill bars -->
+
+
+      <!-- Right: grouped chips -->
+      <div class="skills-chips-col reveal delay-2">
+        <div class="chip-group">
+          <p class="chip-group-label">Languages</p>
+          <div class="chip-row">
+            <span class="chip">Python</span>
+            <span class="chip">Java</span>
+            <span class="chip">SQL</span>
+            <span class="chip">C</span>
+          </div>
+        </div>
+        <div class="chip-group">
+          <p class="chip-group-label">Frameworks &amp; Libraries</p>
+          <div class="chip-row">
+            <span class="chip">Flask</span>
+            <span class="chip">NumPy</span>
+            <span class="chip">Pandas</span>
+            <span class="chip">Qiskit</span>
+            <span class="chip">Matplotlib</span>
+
+          </div>
+        </div>
+        <div class="chip-group">
+          <p class="chip-group-label">Tools &amp; Platforms</p>
+          <div class="chip-row">
+            <span class="chip">Git</span>
+            <span class="chip">GitHub</span>
+            <span class="chip">VS Code</span>
+            <span class="chip">Linux</span>
+            <span class="chip">MySQL</span>
+            <span class="chip">REST APIs</span>
+          </div>
+        </div>
+
+        <div class="chip-group">
+          <p class="chip-group-label">Core Concepts</p>
+          <div class="chip-row">
+            <span class="chip">Object-Oriented Programming</span>
+            <span class="chip">Data Structures &amp; Algorithms</span>
+            <span class="chip">Computer Netwroks</span>
+            <span class="chip">Operating Systems</span>
+            <span class="chip">System Design</span>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIENCE / EDUCATION ===================== -->
+  <section id="experience" class="section experience-section">
+    <div class="section-tag reveal">Journey</div>
+    <h2 class="section-heading reveal">Experience &amp; <em>Education</em></h2>
+
+    <div class="timeline-grid">
+
+      <div class="timeline-col reveal delay-1">
+        <h3 class="tl-col-title">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" />
+            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+            <path d="M2 12h20" />
+          </svg>
+          Experience
+        </h3>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <span class="tl-year">May 2026 — July 2026</span>
+            <h4 class="tl-role">Research Intern</h4>
+            <p class="tl-company">National Institute of Technology Karnataka</p>
+            <p class="tl-desc">Conducted research in Post-Quantum Cryptography with a focus on lattice-based
+              cryptographic algorithms including ML-KEM and ML-DSA. Worked on studying secure
+              key encapsulation and digital signature mechanisms designed to resist quantum
+              computing attacks, while exploring their practical implementation and performance.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="timeline-col reveal delay-2">
+        <h3 class="tl-col-title">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+          </svg>
+          Education
+        </h3>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <span class="tl-year">2023 — Present</span>
+            <h4 class="tl-role">B.Sc. Computer Science (Research)</h4>
+            <p class="tl-company">Central University of Karnataka, Karnataka</p>
+            <p class="tl-desc">Studied core computer science subjects and gained practical experience.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section id="projects" class="section projects-section">
+    <div class="section-tag reveal">Projects</div>
+    <h2 class="section-heading reveal">Featured <em>Work</em></h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-num">01</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span>Python</span><span>NLP</span><span>TTS / STT</span>
+          </div>
+          <h3 class="project-name">SPETEX</h3>
+          <p class="project-desc">A language tool combining Speech-to-Text, Text-to-Speech, and a Dictionary. Allows
+            users to dictate text, listen to written content, and access word definitions with examples — enhancing
+            accessibility and supporting language learning.</p>
+          <div class="project-links">
+            <a href="https://github.com/Vshal-Kumar/SPETEX" target="_blank" rel="noopener noreferrer" class="proj-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+              </svg>
+              View Code
+            </a>
+            <a href="#" class="proj-link muted">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+        <div class="project-glow"></div>
+      </div>
+
+      <div class="project-card reveal delay-1">
+        <div class="project-num">02</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span>Python</span><span>Computer Vision</span><span>RTMDet</span>
+          </div>
+          <h3 class="project-name">Crack Detection — RTMDet</h3>
+          <p class="project-desc">An intelligent computer vision system that detects structural cracks in surfaces using
+            the RTMDet object detection model. Useful for infrastructure inspection and predictive maintenance
+            applications.</p>
+          <div class="project-links">
+            <a href="#" class="proj-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+              </svg>
+              View Code
+            </a>
+            <a href="#" class="proj-link muted">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+        <div class="project-glow"></div>
+      </div>
+
+      <div class="project-card reveal delay-2">
+        <div class="project-num">03</div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span>Flask</span><span>Python</span><span>HTML / CSS</span>
+          </div>
+          <h3 class="project-name">Portfolio Website</h3>
+          <p class="project-desc">This portfolio — designed and built from scratch using Flask backend, smooth CSS
+            animations, and a cinematic greyscale design language inspired by editorial photography aesthetics.</p>
+          <div class="project-links">
+            <a href="https://github.com/Vshal-Kumar/portfolio_VVK" target="_blank" rel="noopener noreferrer"
+              class="proj-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+              </svg>
+              View Code
+            </a>
+            <a href="#" class="proj-link muted">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+              Live
+            </a>
+          </div>
+        </div>
+        <div class="project-glow"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== CERTIFICATIONS ===================== -->
+  <section id="certifications" class="section certs-section">
+    <div class="section-tag reveal">Credentials</div>
+    <h2 class="section-heading reveal">Certifications &amp; <em>Achievements</em></h2>
+
+    <div class="certs-grid">
+
+      <div class="cert-card reveal">
+        <div class="cert-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="6" />
+            <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+          </svg>
+        </div>
+        <div class="cert-body">
+          <h4>Python Programming</h4>
+          <p>Coursera / NPTEL</p>
+          <span class="cert-year">2023</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal delay-1">
+        <div class="cert-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="6" />
+            <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+          </svg>
+        </div>
+        <div class="cert-body">
+          <h4>Machine Learning Fundamentals</h4>
+          <p>Online Certification</p>
+          <span class="cert-year">2023</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal delay-2">
+        <div class="cert-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="6" />
+            <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+          </svg>
+        </div>
+        <div class="cert-body">
+          <h4>Web Development Bootcamp</h4>
+          <p>Udemy</p>
+          <span class="cert-year">2022</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal delay-3">
+        <div class="cert-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+            <path d="M4 22h16" />
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
+          </svg>
+        </div>
+        <div class="cert-body">
+          <h4>Hackathon Participant</h4>
+          <p>College Level Hackathon</p>
+          <span class="cert-year">2024</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+        </div>
+        <div class="cert-body">
+          <h4>Open Source Contributions</h4>
+          <p>GitHub Community</p>
+          <span class="cert-year">2023 – 24</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact" class="section contact-section">
+    <div class="section-tag reveal">Contact</div>
+    <h2 class="section-heading reveal">Let's <em>Connect</em></h2>
+    <p class="section-sub reveal delay-1">Whether you have a project in mind, want to collaborate, or just want to say hi — feel free to reach out! I'm
+      always open to new opportunities and connections.
+    </p>
+
+    <div class="contact-grid">
+
+      <!-- Left: email + social links -->
+
+
+      <!-- Right: contact form -->
+      <div class="contact-form-wrap reveal delay-1">
+        <form id="contactForm" action="/send_email" method="POST" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your Name" required>
+              <span class="field-error" id="nameError"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+              <span class="field-error" id="emailError"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Project Collaboration" required>
+            <span class="field-error" id="subjectError"></span>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" placeholder="Tell me about your project..."
+              required></textarea>
+            <span class="field-error" id="messageError"></span>
+          </div>
+          <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+          <div id="formAlert"></div>
+          <button type="submit" class="btn-solid btn-submit" id="submitBtn">
+            <span id="submitText">Send Message</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="submitIcon">
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">VVK</div>
+      <p class="footer-tagline">Creative Designer &amp; Developer</p>
+
+      <p class="footer-copy">© 2025 Vadrangi Vishal Kumar. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button id="scrollTop" title="Back to top" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
+  </button>
+
+  <script src="/static/js/main.js"></script>
+</body>
+
+</html>
