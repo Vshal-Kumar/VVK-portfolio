@@ -40,12 +40,12 @@ if (cur) {
 
   // grow on interactive elements
   document.addEventListener('mouseover', e => {
-    if (e.target.closest('a, button, .chip, .cert-card, .project-card, .nav-item, .contact-icon-btn')) {
+    if (e.target.closest('a, button, .chip, .cert-featured-card, .cert-tags span, .project-card, .nav-item, .contact-icon-btn')) {
       document.body.classList.add('cursor-grow');
     }
   });
   document.addEventListener('mouseout', e => {
-    if (e.target.closest('a, button, .chip, .cert-card, .project-card, .nav-item, .contact-icon-btn')) {
+    if (e.target.closest('a, button, .chip, .cert-featured-card, .cert-tags span, .project-card, .nav-item, .contact-icon-btn')) {
       document.body.classList.remove('cursor-grow');
     }
   });
@@ -123,10 +123,36 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// ── Contact form ──────────────────────────────
+// ── Contact form & Toast Notification ─────────
 const form = document.getElementById('contactForm');
 if (form) {
   const $ = id => document.getElementById(id);
+
+  const toast = $('toastNotification');
+  const toastText = $('toastText');
+  const toastCloseBtn = $('toastCloseBtn');
+  let toastTimer = null;
+
+  function showToast(type, msg, duration = 3500) {
+    if (!toast) return;
+    if (toastTimer) clearTimeout(toastTimer);
+
+    toast.classList.remove('is-success', 'is-error');
+    toast.classList.add(type === 'success' ? 'is-success' : 'is-error');
+
+    if (toastText) toastText.textContent = msg;
+
+    toast.classList.add('active');
+
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('active');
+    }, duration);
+  }
+
+  toastCloseBtn?.addEventListener('click', () => {
+    if (toastTimer) clearTimeout(toastTimer);
+    toast?.classList.remove('active');
+  });
 
   const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
@@ -138,10 +164,10 @@ if (form) {
   }
 
   // Live validation
-  $('name')?.addEventListener('input',    function(){ setErr('name',    'nameError',    this.value.trim().length >= 2 ? '' : 'At least 2 characters.'); });
-  $('email')?.addEventListener('input',   function(){ setErr('email',   'emailError',   isEmail(this.value.trim())   ? '' : 'Enter a valid email.'); });
-  $('subject')?.addEventListener('input', function(){ setErr('subject', 'subjectError', this.value.trim().length >= 3 ? '' : 'At least 3 characters.'); });
-  $('message')?.addEventListener('input', function(){ setErr('message', 'messageError', this.value.trim().length >= 15 ? '' : 'At least 15 characters.'); });
+  $('name')?.addEventListener('input',    function(){ setErr('name',    'nameError',    this.value.trim().length >= 2 ? '' : 'Name must be at least 2 characters.'); });
+  $('email')?.addEventListener('input',   function(){ setErr('email',   'emailError',   isEmail(this.value.trim())   ? '' : 'Please enter a valid email.'); });
+  $('subject')?.addEventListener('input', function(){ setErr('subject', 'subjectError', this.value.trim().length >= 3 ? '' : 'Subject must be at least 3 characters.'); });
+  $('message')?.addEventListener('input', function(){ setErr('message', 'messageError', this.value.trim().length >= 15 ? '' : 'Message must be at least 15 characters.'); });
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -151,38 +177,37 @@ if (form) {
     const subject = $('subject').value.trim();
     const message = $('message').value.trim();
     const honey   = form.querySelector('[name="website"]').value;
-    const alert   = $('formAlert');
     const btn     = $('submitBtn');
     const btnText = $('submitText');
 
-    if (honey) return; // bot
+    if (honey) {
+      showToast('success', 'Message sent successfully!');
+      form.reset();
+      return;
+    }
 
     let ok = true;
-    ok = setErr('name',    'nameError',    name.length >= 2    ? '' : 'At least 2 characters.')    && ok;
-    ok = setErr('email',   'emailError',   isEmail(email)      ? '' : 'Enter a valid email.')       && ok;
-    ok = setErr('subject', 'subjectError', subject.length >= 3 ? '' : 'At least 3 characters.')     && ok;
-    ok = setErr('message', 'messageError', message.length >= 15 ? '' : 'At least 15 characters.')   && ok;
+    ok = setErr('name',    'nameError',    name.length >= 2    ? '' : 'Name must be at least 2 characters.')    && ok;
+    ok = setErr('email',   'emailError',   isEmail(email)      ? '' : 'Please enter a valid email address.')    && ok;
+    ok = setErr('subject', 'subjectError', subject.length >= 3 ? '' : 'Subject must be at least 3 characters.') && ok;
+    ok = setErr('message', 'messageError', message.length >= 15 ? '' : 'Message must be at least 15 characters.') && ok;
     if (!ok) return;
 
     btn.disabled = true;
     btnText.textContent = 'Sending…';
-    alert.className = '';
-    alert.style.display = 'none';
 
     try {
       const res  = await fetch('/send_email', { method: 'POST', body: new FormData(form) });
       const data = await res.json();
-      if (data.success) {
-        alert.textContent = '✓ Message sent! I\'ll get back to you soon.';
-        alert.className = 'success';
+
+      if (res.ok && data.success) {
+        showToast('success', 'Message sent successfully!');
         form.reset();
       } else {
-        alert.textContent = data.message || '✗ Something went wrong. Please try again.';
-        alert.className = 'error';
+        showToast('error', data.message || 'Failed to send message.');
       }
-    } catch {
-      alert.textContent = '✗ Network error. Please email me directly.';
-      alert.className = 'error';
+    } catch (err) {
+      showToast('error', 'Network error. Please try again.');
     } finally {
       btn.disabled = false;
       btnText.textContent = 'Send Message';

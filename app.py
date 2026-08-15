@@ -10,6 +10,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_mail import Mail, Message
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from werkzeug.middleware.proxy_fix import ProxyFix
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,13 +19,17 @@ load_dotenv()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
+# ProxyFix: Ensures real client IP is detected behind Render's reverse proxy for rate limiting
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+
 # ── Flask-Mail config ───────────────────────────────────
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')       # your Gmail
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')       # App Password
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')       # Google App Password
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_TIMEOUT'] = 10
 
 mail = Mail(app)
 
@@ -41,6 +46,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+# ── Security Headers ────────────────────────────────────
+@app.after_request
+def add_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    return response
+
+
 # ── Helpers ─────────────────────────────────────────────
 def is_valid_email(email: str) -> bool:
     pattern = r'^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$'
@@ -52,10 +67,21 @@ def sanitize(text: str, max_len: int = 500) -> str:
     return text.strip()[:max_len]
 
 
+def sanitize_header(text: str, max_len: int = 200) -> str:
+    """Strip newlines to prevent SMTP header injection."""
+    cleaned = re.sub(r'[\r\n]+', ' ', text)
+    return cleaned.strip()[:max_len]
+
+
 # ── Routes ──────────────────────────────────────────────
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/health')
+def health():
+    return jsonify({'status': 'healthy', 'app': 'VVK Portfolio'}), 200
 
 
 @app.route('/send_email', methods=['POST'])
@@ -69,9 +95,9 @@ def send_email():
             return jsonify({'success': True, 'message': 'Message sent!'})
 
         # Extract & sanitize fields
-        name    = sanitize(request.form.get('name', ''), 100)
-        email   = sanitize(request.form.get('email', ''), 100)
-        subject = sanitize(request.form.get('subject', ''), 200)
+        name    = sanitize_header(request.form.get('name', ''), 100)
+        email   = sanitize_header(request.form.get('email', ''), 100)
+        subject = sanitize_header(request.form.get('subject', ''), 200)
         message = sanitize(request.form.get('message', ''), 2000)
 
         # Server-side validation
