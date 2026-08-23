@@ -233,7 +233,7 @@ Quantum Computing Enthusiast & Developer
         # Dispatch emails asynchronously in background thread to guarantee 0 worker timeouts
         thread = threading.Thread(
             target=send_async_email,
-            args=(app._get_current_object(), [msg_to_owner, msg_to_sender])
+            args=(app, [msg_to_owner, msg_to_sender])
         )
         thread.daemon = True
         thread.start()
