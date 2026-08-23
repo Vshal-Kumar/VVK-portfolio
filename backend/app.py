@@ -1,12 +1,15 @@
 """
 VVK Portfolio — Flask API Backend
 Author: Vadrangi Vishal Kumar
-Hostable on PythonAnywhere, Render, VPS, or locally.
+Hostable on Render, Vercel, PythonAnywhere, VPS, or locally.
 """
 
 import os
 import re
+import socket
 import logging
+import threading
+from datetime import datetime, timezone
 from flask import Flask, request, jsonify
 from flask_mail import Mail, Message
 from flask_limiter import Limiter
@@ -18,11 +21,14 @@ from dotenv import load_dotenv
 # Load environment variables from .env file if present
 load_dotenv()
 
+# Set global socket timeout to prevent workers hanging on stalled connections
+socket.setdefaulttimeout(10.0)
+
 # ── App setup ──────────────────────────────────────────
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
-# Enable CORS for frontend requests (allows React app from local/remote domains)
+# Enable CORS for frontend requests (allows React app from Vercel & local development)
 CORS(app, resources={
     r"/*": {
         "origins": os.environ.get("ALLOWED_ORIGINS", "*").split(",") if os.environ.get("ALLOWED_ORIGINS") else "*"
@@ -34,11 +40,19 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 # ── Flask-Mail config ───────────────────────────────────
 app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
-app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
-app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'true').lower() in ['true', '1', 'yes']
-app.config['MAIL_USE_SSL'] = os.environ.get('MAIL_USE_SSL', 'false').lower() in ['true', '1', 'yes']
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')       # your Gmail
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')       # Google App Password
+mail_port = int(os.environ.get('MAIL_PORT', 587))
+app.config['MAIL_PORT'] = mail_port
+
+# Auto-configure TLS/SSL based on port
+if mail_port == 465:
+    app.config['MAIL_USE_SSL'] = True
+    app.config['MAIL_USE_TLS'] = False
+else:
+    app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'true').lower() in ['true', '1', 'yes']
+    app.config['MAIL_USE_SSL'] = os.environ.get('MAIL_USE_SSL', 'false').lower() in ['true', '1', 'yes']
+
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')       # Gmail address
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')       # 16-char Google App Password
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', os.environ.get('MAIL_USERNAME'))
 app.config['MAIL_TIMEOUT'] = int(os.environ.get('MAIL_TIMEOUT', 10))
 
@@ -48,7 +62,7 @@ mail = Mail(app)
 limiter = Limiter(
     get_remote_address,
     app=app,
-    default_limits=["200 per day", "50 per hour"],
+    default_limits=["500 per day", "150 per hour"],
     storage_uri=os.environ.get("RATELIMIT_STORAGE_URI", "memory://")
 )
 
@@ -91,8 +105,20 @@ def sanitize_header(text: str, max_len: int = 200) -> str:
     return cleaned.strip()[:max_len]
 
 
+def send_async_email(app_obj, messages):
+    """Dispatch emails in a background thread to prevent Gunicorn worker timeouts."""
+    with app_obj.app_context():
+        for msg in messages:
+            try:
+                mail.send(msg)
+                logger.info(f'[CONTACT] Email successfully delivered to {msg.recipients}')
+            except Exception as ex:
+                logger.error(f'[CONTACT] Failed to deliver email to {msg.recipients}: {ex}')
+
+
 # ── Routes ──────────────────────────────────────────────
 @app.route('/')
+@limiter.exempt
 def index():
     return jsonify({
         'name': 'VVK Portfolio API',
@@ -105,16 +131,18 @@ def index():
 
 
 @app.route('/health', methods=['GET'])
+@limiter.exempt
 def health():
     return jsonify({
         'status': 'healthy',
         'app': 'VVK Portfolio Backend',
+        'timestamp': datetime.now(timezone.utc).isoformat(),
         'version': '2.0.0'
     }), 200
 
 
 @app.route('/send_email', methods=['POST'])
-@limiter.limit("5 per 10 minutes")   # max 5 submissions per IP per 10 min
+@limiter.limit("10 per 10 minutes")   # max 10 submissions per IP per 10 min
 def send_email():
     try:
         # Extract payload whether sent as JSON or multipart/form-data
@@ -194,14 +222,19 @@ Quantum Computing Enthusiast & Developer
 """
         )
 
-        mail.send(msg_to_owner)
-        mail.send(msg_to_sender)
+        # Dispatch emails asynchronously in background thread to guarantee 0 worker timeouts
+        thread = threading.Thread(
+            target=send_async_email,
+            args=(app._get_current_object(), [msg_to_owner, msg_to_sender])
+        )
+        thread.daemon = True
+        thread.start()
 
-        logger.info(f'[CONTACT] Email successfully sent from {email} ({name}): {subject}')
+        logger.info(f'[CONTACT] Queued email dispatch from {email} ({name}): {subject}')
         return jsonify({'success': True, 'message': 'Message sent successfully!'}), 200
 
     except Exception as e:
-        logger.error(f'[CONTACT] Error sending email: {e}')
+        logger.error(f'[CONTACT] Error processing contact submission: {e}')
         return jsonify({
             'success': False,
             'message': 'Failed to send message. Please try emailing directly at vadrangi.vishalkumar@gmail.com'

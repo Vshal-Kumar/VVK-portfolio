@@ -1,94 +1,102 @@
 # VVK Portfolio — Vadrangi Vishal Kumar
 
-A personal portfolio website showcasing research in **Quantum Computing**, **Post-Quantum Cryptography (PQC)**, and **Software Engineering**. Built with a lightweight **Python/Flask** backend, cinematic slate-grey styling, fluid micro-animations, and full mobile responsiveness.
+A personal portfolio website showcasing research in **Quantum Computing**, **Post-Quantum Cryptography (PQC)**, and **Software Engineering**. Restructured into a decoupled architecture with a modern **React (Vite)** frontend and a **Python / Flask** API backend optimized for **PythonAnywhere** and cloud hosting.
 
 ---
 
-## 🚀 Live Demo & Deployment
+## 📁 Repository Structure
 
-- **Frontend / Full Stack:** Deployed on Render / Vercel
-- **Author:** [Vadrangi Vishal Kumar](https://github.com/Vshal-Kumar)
+```
+VVK-portfolio/
+├── frontend/                          # React + Vite Frontend Application
+│   ├── public/
+│   │   └── images/                    # Profile images and assets
+│   ├── src/
+│   │   ├── components/                # Modular React components
+│   │   │   ├── Preloader.jsx          # Initial animation and loading bar
+│   │   │   ├── CustomCursor.jsx       # Smooth RAF lerp cursor and element expansion
+│   │   │   ├── Navbar.jsx             # Floating bottom dock with scrollspy
+│   │   │   ├── Hero.jsx               # Hero section, marquee text, and photo frame
+│   │   │   ├── About.jsx              # Bio, social buttons, and status cards
+│   │   │   ├── Skills.jsx             # Categorized skill chips
+│   │   │   ├── Experience.jsx         # Journey timeline (Experience & Education)
+│   │   │   ├── Projects.jsx           # Featured quantum and software projects
+│   │   │   ├── Certifications.jsx     # PROJECT-Q credential card with badges
+│   │   │   ├── Contact.jsx            # Validated contact form with honeypot & API dispatch
+│   │   │   ├── Footer.jsx             # Footer copyright and branding
+│   │   │   ├── ScrollTop.jsx          # Floating scroll-to-top button
+│   │   │   └── Toast.jsx              # Animated feedback toasts
+│   │   ├── App.jsx                    # Root app with intersection observers
+│   │   ├── index.css                  # Slate-grey design system & animations
+│   │   └── main.jsx                   # React mounting entry point
+│   ├── index.html                     # HTML5 template with Google Fonts & SEO tags
+│   ├── package.json                   # React, Vite, Lucide dependencies
+│   ├── vite.config.js                 # Vite config with dev API proxy
+│   ├── .env.example                   # Frontend environment configuration template
+│   └── README.md                      # Frontend setup guide
+│
+├── backend/                           # Flask REST API Backend (Hostable on PythonAnywhere)
+│   ├── app.py                         # Flask application (CORS, Rate Limiting, Mail Dispatch)
+│   ├── wsgi.py                        # Standard WSGI entry point
+│   ├── pythonanywhere_wsgi.py         # Ready-to-copy PythonAnywhere WSGI configuration
+│   ├── requirements.txt               # Backend Python dependencies
+│   ├── Procfile                       # Production process file (Render / Gunicorn)
+│   ├── .env.example                   # Backend environment configuration template
+│   └── README.md                      # Backend setup & PythonAnywhere deployment guide
+│
+├── .gitignore                         # Repository gitignore covering both stacks
+└── README.md                          # Main project documentation
+```
 
 ---
 
-## 🛠 Tech Stack
+## 🚀 Quick Start (Local Development)
 
-- **Backend:** Python 3, Flask 3, Gunicorn, Flask-Mail, Flask-Limiter (Rate Limiting)
-- **Frontend:** Semantic HTML5, Vanilla CSS3 (Custom Design System), JavaScript (ES6+)
-- **Security:** ProxyFix (Reverse Proxy IP handling), Input Sanitization, SMTP Header Injection Protection, Security Headers, Honeypot Spam Trap
+### 1. Start Backend API
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env      # Configure SMTP settings if needed
+python app.py
+```
+> The backend runs at `http://localhost:5000`.
+
+### 2. Start Frontend App
+```bash
+cd frontend
+npm install
+npm run dev
+```
+> The frontend runs at `http://localhost:5173` and automatically proxies `/send_email` and `/health` requests to the local backend.
 
 ---
 
-## 📦 Features
+## ☁️ Deployment Guide
 
-- **Quantum & Research Focused Showcase:** Highlighted projects including Bell-State Quantum Mutual Authentication and Quantum Simulations with Qiskit.
-- **Compact Credentials Card:** Dedicated verification badge for the PROJECT-Q 30-Day Quantum Computing Challenge.
-- **Secure Contact Form:** Integrated Gmail SMTP mailing with auto-acknowledgment replies, rate limiting (5 req / 10 min), and a toast notification popup.
-- **Production-Ready Cloud Configuration:** Built-in health checks (`/health`), reverse proxy support, and Gunicorn WSGI configuration.
+### Backend: PythonAnywhere Hosting
+1. Clone the repository into your PythonAnywhere account.
+2. Create a virtual environment and install `backend/requirements.txt`.
+3. Set your environment variables in `backend/.env`.
+4. In the **Web** tab:
+   - Set virtualenv path to your created virtual environment.
+   - Set source directory to `/home/<username>/VVK-portfolio/backend`.
+   - Update the WSGI file using the provided template in `backend/pythonanywhere_wsgi.py`.
+5. Click **Reload**. Your backend API will be live at `https://<username>.pythonanywhere.com`.
+*(For detailed steps, see [backend/README.md](backend/README.md))*
 
----
-
-## ⚙️ Local Development Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Vshal-Kumar/VVK-portfolio.git
-   cd VVK-portfolio
-   ```
-
-2. **Create and activate a virtual environment:**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure Environment Variables:**
-   ```bash
-   cp .env.example .env
-   ```
-   Fill in your details in `.env`:
+### Frontend: Vercel / Netlify / Cloudflare Pages
+1. Connect your repository to **Vercel** or **Netlify**.
+2. Set **Root Directory** to `frontend`.
+3. Set Build Command to `npm run build` and Output Directory to `dist`.
+4. Add environment variable:
    ```ini
-   SECRET_KEY=your-random-secret-key
-   MAIL_USERNAME=your.email@gmail.com
-   MAIL_PASSWORD=your-google-app-password
-   MAIL_RECIPIENT=vadrangi.vishalkumar@gmail.com
-   FLASK_ENV=development
-   PORT=5000
+   VITE_API_URL=https://<your-username>.pythonanywhere.com
    ```
-
-5. **Run the application:**
-   ```bash
-   python app.py
-   ```
-   Open `http://localhost:5000` in your browser.
-
----
-
-## ☁️ Deployment on Render (Step-by-Step)
-
-1. Push your repository to **GitHub**.
-2. Log in to **[Render.com](https://render.com)** and click **New +** → **Web Service**.
-3. Connect your repository: `Vshal-Kumar/VVK-portfolio`.
-4. Configure settings:
-   - **Environment:** `Python 3`
-   - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `gunicorn app:app` (or it will automatically use `Procfile`)
-   - **Health Check Path:** `/health`
-5. Under the **Environment Variables** tab, add:
-   - `SECRET_KEY` = `<any-random-string>`
-   - `MAIL_USERNAME` = `your.email@gmail.com`
-   - `MAIL_PASSWORD` = `<your-16-char-google-app-password>`
-   - `MAIL_RECIPIENT` = `vadrangi.vishalkumar@gmail.com`
-   - `FLASK_ENV` = `production`
-6. Click **Deploy Web Service**. Your portfolio will be live in ~1 minute!
+5. Deploy!
 
 ---
 
 ## 📄 License
-
-This project is licensed under the MIT License — feel free to customize and use it for your own portfolio.
+This project is licensed under the MIT License.

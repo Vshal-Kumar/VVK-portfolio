@@ -14,10 +14,17 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollTop from './components/ScrollTop';
 import Toast from './components/Toast';
+import { initBackendKeepAlive } from './utils/keepAlive';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [toast, setToast] = useState(null);
+
+  // Render backend keep-alive & pre-warm
+  useEffect(() => {
+    const cleanup = initBackendKeepAlive();
+    return () => cleanup?.();
+  }, []);
 
   // Scroll reveal observer
   useEffect(() => {

@@ -1,0 +1,22 @@
+name: Render Backend 24/7 Keep-Alive
+
+on:
+  schedule:
+    # Trigger every 14 minutes to prevent Render free-tier spin down (15 min idle threshold)
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Keep-Alive Heartbeat
+        run: |
+          BACKEND_URL="${{ secrets.RENDER_BACKEND_URL }}"
+          if [ -z "$BACKEND_URL" ]; then
+            echo "RENDER_BACKEND_URL secret not set. Skipping keep-alive ping."
+            exit 0
+          fi
+          echo "Sending keep-alive ping to $BACKEND_URL/health..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$BACKEND_URL/health" || true)
+          echo "Response status code: $STATUS"
