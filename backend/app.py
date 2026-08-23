@@ -28,10 +28,18 @@ socket.setdefaulttimeout(10.0)
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
-# Enable CORS for frontend requests (allows React app from Vercel & local development)
+# Parse allowed origins (stripping whitespace and trailing slashes)
+allowed_origins_raw = os.environ.get("ALLOWED_ORIGINS", "*")
+if not allowed_origins_raw or allowed_origins_raw.strip() == "*":
+    origins_list = "*"
+else:
+    origins_list = [origin.strip().rstrip('/') for origin in allowed_origins_raw.split(",") if origin.strip()]
+
 CORS(app, resources={
     r"/*": {
-        "origins": os.environ.get("ALLOWED_ORIGINS", "*").split(",") if os.environ.get("ALLOWED_ORIGINS") else "*"
+        "origins": origins_list,
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization", "Cache-Control"]
     }
 })
 
