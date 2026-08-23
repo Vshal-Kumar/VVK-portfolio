@@ -7,6 +7,8 @@ export default function Hero() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Only apply parallax on desktop/laptop viewports to prevent mobile jumping
+      if (window.innerWidth <= 768) return;
       const y = window.scrollY;
       if (photoWrapRef.current) {
         photoWrapRef.current.style.transform = `translate(-50%, calc(-50% + ${y * 0.11}px))`;
@@ -26,28 +28,30 @@ export default function Hero() {
         Quantum Computing Enthusiast
       </div>
 
-      <div className="hero-photo-wrap" ref={photoWrapRef}>
-        <div className="photo-frame">
-          <img src="/images/prof.png" alt="Vadrangi Vishal Kumar" />
-        </div>
-      </div>
-
       <div className="hero-top-left">
-        <AnimatedContent distance={25} direction="horizontal" duration={0.9} delay={0.2}>
+        <AnimatedContent distance={20} direction="horizontal" duration={0.8} delay={0.2}>
           <p className="hero-copy">© Vishal Kumar</p>
         </AnimatedContent>
       </div>
 
-      <div className="hero-mid-right">
-        <AnimatedContent distance={30} direction="horizontal" reverse duration={0.9} delay={0.3}>
-          <div className="hero-label">
-            <span className="label-line">Quantum Computing Enthusiast</span>
+      <div className="hero-center-container">
+        <div className="hero-photo-wrap" ref={photoWrapRef}>
+          <div className="photo-frame">
+            <img src="/images/prof.png" alt="Vadrangi Vishal Kumar" />
           </div>
-        </AnimatedContent>
+        </div>
+
+        <div className="hero-mid-right">
+          <AnimatedContent distance={25} direction="horizontal" reverse duration={0.85} delay={0.3}>
+            <div className="hero-label">
+              <span className="label-line">Quantum Computing Enthusiast</span>
+            </div>
+          </AnimatedContent>
+        </div>
       </div>
 
       <div className="hero-scroll">
-        <AnimatedContent distance={20} direction="vertical" duration={0.8} delay={0.5}>
+        <AnimatedContent distance={15} direction="vertical" duration={0.7} delay={0.4}>
           <span>Scroll</span>
           <div className="scroll-line"></div>
         </AnimatedContent>
