@@ -1,0 +1,6 @@
+Flask==3.0.3
+Flask-Mail==0.10.0
+Flask-Limiter==3.7.0
+Flask-Cors==4.0.1
+python-dotenv==1.0.1
+gunicorn==22.0.0
